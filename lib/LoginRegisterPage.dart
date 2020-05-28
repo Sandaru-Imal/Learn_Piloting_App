@@ -7,6 +7,17 @@ class LoginRegisterPage extends StatefulWidget{
 }
 
 class _LoginRegisterState extends State<LoginRegisterPage>{
+
+  //specify methods
+  void validateAndSave(){
+
+  }
+
+  void moveToRegister(){
+    
+  }
+
+  //Desgin of Login/Register Page
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -69,12 +80,15 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
       child: new Text("Login", style: new TextStyle(fontSize: 20.0)),
       textColor: Colors.pink,
       color: Colors.pink,
+
+      onPressed: validateAndSave,
       ),
 
     new FlatButton(
       child: new Text("Not have an Account?", style: new TextStyle(fontSize: 14.0)),
       textColor: Colors.pink,
-      
+
+       onPressed: moveToRegister,
       ),
     ];
   }
