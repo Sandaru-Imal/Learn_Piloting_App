@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "596859006165",
+    "firebase_url": "https://pilotingapp.firebaseio.com",
+    "project_id": "pilotingapp",
+    "storage_bucket": "pilotingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596859006165:android:920c5c0f48e971c7cb865c",
+        "android_client_info": {
+          "package_name": "com.example.PilotingApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596859006165-091n0en5vbnp2a4a72ueefinia3ghqe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsP6chSXQAv4gI4kQfFf1qEEzPKMKFIVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596859006165-091n0en5vbnp2a4a72ueefinia3ghqe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
