@@ -1,4 +1,5 @@
 import 'package:PilotingApp/HomePage.dart';
+import 'package:PilotingApp/LoginRegisterPage.dart';
 // import 'package:PilotingApp/LoginRegisterPage.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class PilotingApp extends StatelessWidget{
         primarySwatch: Colors.pink,
         ),
 
-        home: HomePage(),
+        home: LoginRegisterPage(),
 
     );
   }
