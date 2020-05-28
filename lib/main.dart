@@ -1,8 +1,7 @@
-import 'package:PilotingApp/HomePage.dart';
-import 'package:PilotingApp/LoginRegisterPage.dart';
-// import 'package:PilotingApp/LoginRegisterPage.dart';
+import 'package:PilotingApp/Authentication.dart';
 import 'package:flutter/material.dart';
-
+import 'Mapping.dart';
+import 'Authentication.dart';
 
 void main(){
   runApp(new PilotingApp());
@@ -17,7 +16,7 @@ class PilotingApp extends StatelessWidget{
         primarySwatch: Colors.pink,
         ),
 
-        home: LoginRegisterPage(),
+        home: MappingPage(auth: Auth(),),
 
     );
   }
