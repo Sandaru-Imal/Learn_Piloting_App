@@ -1,11 +1,12 @@
 import 'package:PilotingApp/Authentication.dart';
 import 'package:flutter/material.dart';
+import 'Authentication.dart';
 
 class LoginRegisterPage extends StatefulWidget{
 
   LoginRegisterPage({
     this.auth,
-    this.onSignedIn
+    this.onSignedIn,
   });
 
   final AuthImplementation auth;
@@ -45,10 +46,10 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     if(validateAndSave()){
       try{
         if(_formType == FormType.login){
-          String userId = await widget.auth.signIn(_email, _password);
+          String userId = await widget.auth.SignIn(_email, _password);
           print("Login User Id = " +userId);
         }else{
-          String userId = await widget.auth.signUp(_email, _password);
+          String userId = await widget.auth.SignUp(_email, _password);
           print("register User Id = " +userId);
         }
 
