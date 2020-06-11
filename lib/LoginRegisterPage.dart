@@ -81,8 +81,10 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: new AppBar(
         title: new Text("Flutter Piloting App"),
+        backgroundColor: Colors.blueGrey[900],
       ),
 
       body: new Container(
@@ -161,7 +163,8 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     new RaisedButton(
       child: new Text("Login", style: new TextStyle(fontSize: 20.0)),
       textColor: Colors.white,
-      color: Colors.pink,
+      color: Colors.blueGrey[900],
+
 
       onPressed: validateAndSubmit,
       ),
@@ -180,7 +183,7 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     new RaisedButton(
       child: new Text("Create Account", style: new TextStyle(fontSize: 20.0)),
       textColor: Colors.white,
-      color: Colors.pink,
+      color: Colors.blueGrey[900],
 
       onPressed: validateAndSubmit,
       ),

@@ -11,15 +11,18 @@ abstract class AuthImplementation{
 class Auth implements AuthImplementation{
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<String> SignIn(String email, String password) async{
-    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password) as FirebaseUser;
+  Future<String> SignIn(String email, String password) async {
+    FirebaseUser user = (await FirebaseAuth.instance.
+    signInWithEmailAndPassword(email: email, password: password)).user;
     return user.uid;
-  }
+    }
 
-   Future<String> SignUp(String email, String password) async{
-    FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password) as FirebaseUser;
+
+   Future<String> SignUp(String email, String password) async {
+    FirebaseUser user = (await FirebaseAuth.instance.
+    createUserWithEmailAndPassword(email: email, password: password)).user;
     return user.uid;
-  }
+    }
 
   Future<String> getCurrentUser() async{
     FirebaseUser user  = await _firebaseAuth.currentUser();
