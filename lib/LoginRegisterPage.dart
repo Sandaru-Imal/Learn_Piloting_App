@@ -1,4 +1,5 @@
 import 'package:PilotingApp/Authentication.dart';
+import 'package:PilotingApp/DialogBox.dart';
 import 'package:flutter/material.dart';
 import 'Authentication.dart';
 
@@ -24,6 +25,8 @@ class LoginRegisterPage extends StatefulWidget{
 
 class _LoginRegisterState extends State<LoginRegisterPage>{
 
+  DialogBox dialogBox = new DialogBox();
+
   final formKey = new GlobalKey<FormState>();
   FormType _formType = FormType.login;
   String _email = "";
@@ -47,15 +50,18 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
       try{
         if(_formType == FormType.login){
           String userId = await widget.auth.SignIn(_email, _password);
+          dialogBox.information(context, "Congratulations =","your have logged in succesfully");
           print("Login User Id = " +userId);
         }else{
           String userId = await widget.auth.SignUp(_email, _password);
+          dialogBox.information(context, "Congratulations =","your account has been created successfully");
           print("register User Id = " +userId);
         }
 
         widget.onSignedIn();
 
       }catch(e){
+        dialogBox.information(context, "Error =", e.toString());
         print("Error = " +e.toString());
       }
     }
@@ -81,10 +87,9 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.blueGrey,
       appBar: new AppBar(
         title: new Text("Flutter Piloting App"),
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: Colors.pink,
       ),
 
       body: new Container(
@@ -163,7 +168,7 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     new RaisedButton(
       child: new Text("Login", style: new TextStyle(fontSize: 20.0)),
       textColor: Colors.white,
-      color: Colors.blueGrey[900],
+      color: Colors.pink,
 
 
       onPressed: validateAndSubmit,
@@ -183,7 +188,7 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     new RaisedButton(
       child: new Text("Create Account", style: new TextStyle(fontSize: 20.0)),
       textColor: Colors.white,
-      color: Colors.blueGrey[900],
+      color: Colors.pink,
 
       onPressed: validateAndSubmit,
       ),

@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage>{
    return new Scaffold(
      appBar: new AppBar(
        title: new Text("Home"),
-       backgroundColor: Colors.blueGrey[900],
+       backgroundColor: Colors.pink,
        
      ),
 
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage>{
      ),
 
      bottomNavigationBar: new BottomAppBar(
-       color: Colors.blueGrey[900],
+       color: Colors.pink,
 
        child: new Container(
          margin: const EdgeInsets.only(left:70.0, right:70.0),
