@@ -1,3 +1,4 @@
+import 'package:PilotingApp/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,6 +18,8 @@ class _UploadPhotoPageState extends State<UploadPhotoPage>{
 
   File _sampleImage;
   String _myValue;
+  String url;
+
   final formKey = new GlobalKey<FormState>();
   final picker = ImagePicker();
 
@@ -38,6 +41,58 @@ class _UploadPhotoPageState extends State<UploadPhotoPage>{
     }else{
       return false;
     }
+  }
+
+  void uploadStatusImage() async{
+    if(validateAndSave()){
+      final StorageReference postImageRef = FirebaseStorage.instance.ref().child("Post Images");
+
+      //generate a random key
+
+      var timekey = new DateTime.now();
+
+      final StorageUploadTask uploadTask = postImageRef.child(timekey.toString() + ".jpg").putFile(_sampleImage);
+
+      var ImageUrl = await(await uploadTask.onComplete).ref.getDownloadURL();
+
+      url = ImageUrl.toString();
+
+      print("Image URL" +url);
+
+      goToHomePage();
+      saveToDatabase(url);
+
+    }
+  }
+
+  void saveToDatabase(url){
+    var dbTimekey = new DateTime.now();
+    var formatDate = new DateFormat('MMM d, yyyy');
+    var formatTime = new DateFormat('EEEE, hh:mm aaa');
+
+    String date = formatDate.format(dbTimekey);
+    String time = formatTime.format(dbTimekey);
+
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+
+    var data = {
+      "image": url,
+      "description": _myValue,
+      "date": date,
+      "time": time,
+    };
+
+    ref.child("Posts").push().set(data);
+  }
+
+  void goToHomePage(){
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context){
+        return new HomePage();
+      }
+      )
+      );
   }
 
   @override
@@ -100,7 +155,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage>{
                 child: Text("Add New Post"),
                 textColor: Colors.white,
                 color: Colors.pink,
-                onPressed: validateAndSave,
+                onPressed: uploadStatusImage,
                 ),
 
             ],
