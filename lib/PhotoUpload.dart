@@ -15,14 +15,29 @@ class UploadPhotoPage extends StatefulWidget{
 
 class _UploadPhotoPageState extends State<UploadPhotoPage>{
 
-  File sampleImage;
-  final formKey = new GlobalKey();
+  File _sampleImage;
+  String _myValue;
+  final formKey = new GlobalKey<FormState>();
+  final picker = ImagePicker();
 
-  Future getImage() async{
-    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
     setState(() {
-      sampleImage = tempImage;
+      _sampleImage = File(pickedFile.path);
     });
+  }
+
+  bool validateAndSave(){
+
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @override
@@ -34,7 +49,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage>{
       ),
 
       body: new Center(
-        child: sampleImage == null? Text("Select an Image"): enableUpload(),
+        child: _sampleImage == null? Text("Select an Image"): enableUpload(),
       ),
 
       floatingActionButton: new FloatingActionButton(
@@ -46,7 +61,53 @@ class _UploadPhotoPageState extends State<UploadPhotoPage>{
   }
 
   Widget enableUpload(){
-    return new Form(
+
+    return Container(
+
+      child: new Form(
+
+      key: formKey,
+
+          child: Column(
+
+            children: <Widget>[
+
+              Image.file(_sampleImage, height: 310.0, width: 660.0,),
+
+              SizedBox(height: 15.0,),
+
+              TextFormField(
+
+                decoration: new InputDecoration(labelText: 'Description'),
+
+                validator: (value){
+
+                  return value.isEmpty ? 'Description is required' : null;
+                },
+
+                onSaved: (value){
+
+                  return _myValue = value;
+                },
+
+              ),
+
+              SizedBox(height: 15.0,),
+
+              RaisedButton(
+
+                elevation: 10.0,
+                child: Text("Add New Post"),
+                textColor: Colors.white,
+                color: Colors.pink,
+                onPressed: validateAndSave,
+                ),
+
+            ],
+
+          ),
+
+      ),
 
     );
   }
