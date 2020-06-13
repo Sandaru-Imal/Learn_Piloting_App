@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage>{
 
       for(var individualKey in KEYS){
         Posts posts = new Posts(
-
           DATA['individualKey']['image'],
           DATA['individualKey']['description'],
           DATA['individualKey']['date'],
@@ -50,7 +49,6 @@ class _HomePageState extends State<HomePage>{
 
         postList.add(posts);
       }
-
       setState(() {
         print('Length :  $postList.length');
       });
@@ -72,11 +70,15 @@ class _HomePageState extends State<HomePage>{
      appBar: new AppBar(
        title: new Text("Home"),
        backgroundColor: Colors.pink,
-       
      ),
 
      body: new Container(
-
+       child: postList.length == 0 ? new Text("No Blog Post available") : new ListView.builder(
+         itemCount: postList.length,
+         itemBuilder: (_, index){
+           return PostsUI(postList[index].image, postList[index].description, postList[index].date, postList[index].time);
+         },
+       ),
      ),
 
      bottomNavigationBar: new BottomAppBar(
@@ -122,7 +124,7 @@ class _HomePageState extends State<HomePage>{
 
   Widget PostsUI(String image, String description, String date, String time){
     return new Card(
-      elevation: 10,0,
+      elevation: 10.0,
       margin: EdgeInsets.all(15.0),
 
       child: new Container(
