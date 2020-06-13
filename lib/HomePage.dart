@@ -1,6 +1,8 @@
 import 'package:PilotingApp/PhotoUpload.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'Authentication.dart';
+import 'Posts.dart';
 
 
 class HomePage extends StatefulWidget{
@@ -22,6 +24,38 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage>{
+
+  List<Posts> postList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    DatabaseReference postRef = FirebaseDatabase.instance.reference().child("Posts");
+    postRef.once().then((DataSnapshot snap)
+    {
+      var KEYS = snap.value.keys;
+      var DATA = snap.value;
+
+      postList.clear();
+
+      for(var individualKey in KEYS){
+        Posts posts = new Posts(
+
+          DATA['individualKey']['image'],
+          DATA['individualKey']['description'],
+          DATA['individualKey']['date'],
+          DATA['individualKey']['time'],
+        );
+
+        postList.add(posts);
+      }
+
+      setState(() {
+        print('Length :  $postList.length');
+      });
+    });
+  }
 
   void _logoutUser() async{
     try{
@@ -84,5 +118,51 @@ class _HomePageState extends State<HomePage>{
        ),
      ),
    );
+  }
+
+  Widget PostsUI(String image, String description, String date, String time){
+    return new Card(
+      elevation: 10,0,
+      margin: EdgeInsets.all(15.0),
+
+      child: new Container(
+        padding: new EdgeInsets.all(14.0),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: <Widget>[
+              new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                  new Text(
+                  date,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                ),
+
+                new Text(
+                  time,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+
+            SizedBox(height: 10.0,),
+
+            new Image.network(image, fit: BoxFit.cover),
+
+            SizedBox(height: 10.0,),
+
+            new Text(
+                  description,
+                  style: Theme.of(context).textTheme.subtitle2,
+                  textAlign: TextAlign.center,
+                ),
+
+          ],
+          ),
+      ),
+    );
   }
 }
