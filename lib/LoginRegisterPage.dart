@@ -3,8 +3,7 @@ import 'package:PilotingApp/DialogBox.dart';
 import 'package:flutter/material.dart';
 import 'Authentication.dart';
 
-class LoginRegisterPage extends StatefulWidget{
-
+class LoginRegisterPage extends StatefulWidget {
   LoginRegisterPage({
     this.auth,
     this.onSignedIn,
@@ -13,18 +12,14 @@ class LoginRegisterPage extends StatefulWidget{
   final AuthImplementation auth;
   final VoidCallback onSignedIn;
 
-  State<StatefulWidget> createState(){
+  State<StatefulWidget> createState() {
     return _LoginRegisterState();
   }
 }
 
- enum FormType{
-    login,
-    register
-  }
+enum FormType { login, register }
 
-class _LoginRegisterState extends State<LoginRegisterPage>{
-
+class _LoginRegisterState extends State<LoginRegisterPage> {
   DialogBox dialogBox = new DialogBox();
 
   final formKey = new GlobalKey<FormState>();
@@ -33,39 +28,37 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
   String _password = "";
 
   //specify methods
-  bool validateAndSave(){
+  bool validateAndSave() {
     final form = formKey.currentState;
 
-    if(form.validate()){
+    if (form.validate()) {
       form.save();
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  void validateAndSubmit() async{
-
-    if(validateAndSave()){
-      try{
-        if(_formType == FormType.login){
+  void validateAndSubmit() async {
+    if (validateAndSave()) {
+      try {
+        if (_formType == FormType.login) {
           String userId = await widget.auth.SignIn(_email, _password);
-          print("Login User Id = " +userId);
-        }else{
+          print("Login User Id = " + userId);
+        } else {
           String userId = await widget.auth.SignUp(_email, _password);
-          print("register User Id = " +userId);
+          print("register User Id = " + userId);
         }
 
         widget.onSignedIn();
-
-      }catch(e){
+      } catch (e) {
         dialogBox.information(context, "Error =", e.toString());
-        print("Error = " +e.toString());
+        print("Error = " + e.toString());
       }
     }
   }
 
-  void moveToRegister(){
+  void moveToRegister() {
     formKey.currentState.reset();
 
     setState(() {
@@ -73,7 +66,7 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
     });
   }
 
-  void moveToLogin(){
+  void moveToLogin() {
     formKey.currentState.reset();
 
     setState(() {
@@ -89,65 +82,57 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
         title: new Text("Flutter Piloting App"),
         backgroundColor: Colors.pink,
       ),
-
       body: new Container(
         margin: EdgeInsets.all(15.0),
-
         child: new Form(
-
           key: formKey,
-
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: createInputs() + createButtons(),
-
           ),
-          ),
+        ),
       ),
     );
   }
 
-  List<Widget> createInputs(){
-    return[
-      SizedBox(height: 10.0,),
+  List<Widget> createInputs() {
+    return [
+      SizedBox(
+        height: 10.0,
+      ),
       logo(),
-      SizedBox(height: 20.0,),
-
+      SizedBox(
+        height: 20.0,
+      ),
       new TextFormField(
         decoration: new InputDecoration(labelText: 'Email'),
-        validator: (value){
-          return value.isEmpty ? 'Email is required' :null;
+        validator: (value) {
+          return value.isEmpty ? 'Email is required' : null;
         },
-
-        onSaved: (value){
+        onSaved: (value) {
           return _email = value;
         },
       ),
-
-      SizedBox(height: 10.0,),
-
+      SizedBox(
+        height: 10.0,
+      ),
       new TextFormField(
         decoration: new InputDecoration(labelText: 'Password'),
         obscureText: true,
-
-        validator: (value){
-          return value.isEmpty ? 'Password is required' :null;
+        validator: (value) {
+          return value.isEmpty ? 'Password is required' : null;
         },
-
-        onSaved: (value){
+        onSaved: (value) {
           return _password = value;
         },
-
       ),
-
-      SizedBox(height: 20.0,),
-
+      SizedBox(
+        height: 20.0,
+      ),
     ];
   }
 
-  
-
-  Widget logo(){
+  Widget logo() {
     return new Hero(
       tag: 'hero',
       child: new CircleAvatar(
@@ -155,51 +140,41 @@ class _LoginRegisterState extends State<LoginRegisterPage>{
         radius: 110.0,
         child: Image.asset('images/airbus.png'),
       ),
-      );
+    );
   }
 
-
-  List<Widget> createButtons(){
-
-    if(_formType == FormType.login){
-      return[
-    new RaisedButton(
-      child: new Text("Login", style: new TextStyle(fontSize: 20.0)),
-      textColor: Colors.white,
-      color: Colors.pink,
-
-
-      onPressed: validateAndSubmit,
-      ),
-
-    new FlatButton(
-      child: new Text("Not have an Account?", style: new TextStyle(fontSize: 14.0)),
-      textColor: Colors.red,
-
-       onPressed: moveToRegister,
-      ),
-    ];
-
-    }else{
-
-       return[
-    new RaisedButton(
-      child: new Text("Create Account", style: new TextStyle(fontSize: 20.0)),
-      textColor: Colors.white,
-      color: Colors.pink,
-
-      onPressed: validateAndSubmit,
-      ),
-
-    new FlatButton(
-      child: new Text("Already Registered?", style: new TextStyle(fontSize: 14.0)),
-      textColor: Colors.red,
-
-       onPressed: moveToLogin,
-      ),
-    ];
-
+  List<Widget> createButtons() {
+    if (_formType == FormType.login) {
+      return [
+        new RaisedButton(
+          child: new Text("Login", style: new TextStyle(fontSize: 20.0)),
+          textColor: Colors.white,
+          color: Colors.pink,
+          onPressed: validateAndSubmit,
+        ),
+        new FlatButton(
+          child: new Text("Not have an Account?",
+              style: new TextStyle(fontSize: 14.0)),
+          textColor: Colors.red,
+          onPressed: moveToRegister,
+        ),
+      ];
+    } else {
+      return [
+        new RaisedButton(
+          child:
+              new Text("Create Account", style: new TextStyle(fontSize: 20.0)),
+          textColor: Colors.white,
+          color: Colors.pink,
+          onPressed: validateAndSubmit,
+        ),
+        new FlatButton(
+          child: new Text("Already Registered?",
+              style: new TextStyle(fontSize: 14.0)),
+          textColor: Colors.red,
+          onPressed: moveToLogin,
+        ),
+      ];
     }
   }
 }
-  
